@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "isak-skills",
-      "description": "Triage a ticket or production signal, and ship finished work to an open PR.",
+      "description": "Triage a ticket, ship it to a merge-ready PR, and write the docs your agents read.",
       "source": "./",
       "category": "productivity"
     }
