@@ -1,0 +1,17 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "isakfagerlund-skills",
+  "description": "Collection of skills I use",
+  "owner": {
+    "name": "Isak Fagerlund",
+    "url": "https://github.com/isakfagerlund"
+  },
+  "plugins": [
+    {
+      "name": "isak-skills",
+      "description": "Triage a ticket or production signal, and ship finished work to an open PR.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

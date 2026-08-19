@@ -1,0 +1,9 @@
+{
+  "name": "isak-skills",
+  "version": "0.1.0",
+  "description": "Triage a ticket or production signal, and ship finished work to an open PR.",
+  "author": {
+    "name": "Isak Fagerlund",
+    "url": "https://github.com/isakfagerlund"
+  }
+}
