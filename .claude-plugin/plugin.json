@@ -1,6 +1,6 @@
 {
   "name": "isak-skills",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Triage a ticket, ship it to a merge-ready PR, and write the docs your agents read.",
   "author": {
     "name": "Isak Fagerlund",
