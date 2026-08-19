@@ -8,6 +8,7 @@ Collection of [Claude Code](https://claude.com/claude-code) skills I use, packag
 | --- | --- | --- |
 | [`triage`](skills/triage/SKILL.md) | `/triage [ticket, URL, or error signal]` or model-invoked | Understands a work item, challenges it with production data, and returns findings, options with tradeoffs, and a plan brief. Analysis only — never implements. |
 | [`ship`](skills/ship/SKILL.md) | `/ship <ticket-id \| ticket-url \| pasted ticket text>` | Takes one small-to-medium ticket from start to merge-ready PR without check-ins: understand, plan, implement with sub-agents, review with a Fable sub-agent, handle the feedback, open the PR, wait for the preview link. |
+| [`ship-light`](skills/ship-light/SKILL.md) | `/ship-light <ticket-id \| ticket-url \| short description>` | The low-ceremony `ship`, for changes too small to earn the ceremony — a translation, a copy tweak, a config entry, a one-file fix. No plan file, no sub-agent fan-out, no Fable review; a peer review only when the diff actually warrants one. |
 | [`pr-simple`](skills/pr-simple/SKILL.md) | `/pr-simple` or model-invoked | Rewrites the current branch's PR description so anyone can understand it — short, visual (mermaid diagram or before/after table), simple technical English — and pushes it with `gh pr edit`. |
 | [`writing-for-agents`](skills/writing-for-agents/SKILL.md) | model-invoked | Reference for writing any document an agent consumes — a skill, an `AGENTS.md` / `CLAUDE.md`, a doc reached by a pointer: context pointers, the information hierarchy, completion criteria, leading words, pruning. |
 | [`bro`](skills/bro/SKILL.md) | `/bro` or model-invoked | Re-explains the previous assistant message in plain language, for when the reply didn't land. Re-expresses only — never re-answers, never adds information, and every path, command and number survives verbatim. |
@@ -16,8 +17,10 @@ Collection of [Claude Code](https://claude.com/claude-code) skills I use, packag
 `triage` loads `evidence`, so keep them installed together. `writing-for-agents` loads its own
 [`SKILL-MECHANICS.md`](skills/writing-for-agents/SKILL-MECHANICS.md) when the document being written is a skill.
 
-`ship` is written against my own monorepo — it names that repo's setup commands, preview URL patterns, Linear
-project prefixes and in-repo skills. Read it before running it anywhere else, and swap those for yours.
+`ship` and `ship-light` are written against my own monorepo — they name that repo's setup commands, preview URL
+patterns, Linear project prefixes and in-repo skills. Read them before running them anywhere else, and swap those
+for yours. `ship-light` escalates to `ship` on its own the moment the work turns out to need a migration, a new
+endpoint, or logic changes across more than a few files.
 
 ## Install
 
