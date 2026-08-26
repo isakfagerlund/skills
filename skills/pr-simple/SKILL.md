@@ -14,7 +14,12 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
    gh pr view --json number,title,body,url
    git diff main...HEAD --stat | tail -30
    ```
-   No PR yet? Say so and stop. Do not create one.
+   No PR yet? Commit, push, and create it, then continue with step 2:
+   ```bash
+   git add -A && git commit -m "<type>(<scope>): <imperative summary>"
+   git push -u origin HEAD
+   gh pr create --title "<type>(<scope>): <imperative summary>" --body-file .github/pull_request_template.md --label preview:web
+   ```
 
 2. Read `.github/pull_request_template.md` from disk (it changes).
 
