@@ -41,8 +41,14 @@ and local environment state are known.
 
 ## 2. Understand
 
-Fetch the ticket and its comments with the available issue-tracker tools. If that
-fails, use the pasted ticket text and disclose the missing source in the PR.
+For a Linear ticket ID or URL, load and follow the `linear-context` skill, then use
+its text handoff as the ticket source. When a pasted Linear ticket contains images
+whose contents matter, keep the pasted text as the primary source and pass only
+the extracted ID and image question to `linear-context`. Add its image evidence to
+the pasted source. This keeps Linear payloads and images out of this thread while
+preserving video transcripts that Linear tools may omit.
+For another tracker, fetch the ticket and comments with its available tools. If
+fetching fails, use pasted ticket text and disclose the missing source in the PR.
 
 Write down:
 
@@ -111,7 +117,10 @@ checks remain green.
 
 Push the branch without force, then create a ready-for-review PR using the
 repository's current PR instructions and template. Include the ticket reference,
-assumptions, test evidence, and exactly one applicable preview label.
+assumptions, test evidence, and exactly one applicable preview label. Then run the
+`pr-simple` skill on the new PR: it rewrites only the `## Description` section and
+leaves assumptions, test evidence, and the ticket reference where the template puts
+them.
 
 Watch CI. Fix owned failures and retry an unrelated infrastructure failure once.
 Stop after three fix pushes. Report any remaining failed check honestly. A PR size

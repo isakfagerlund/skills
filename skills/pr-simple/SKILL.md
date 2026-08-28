@@ -1,6 +1,6 @@
 ---
 name: pr-simple
-description: Rewrite the current branch's pull request description so anyone can understand it — short, visual (mermaid diagram or before/after table), simple technical English — and push it to GitHub with `gh pr edit`. Use when the user says "update the PR", "/pr-simple", "make the PR description clearer", "simplify the PR description", or asks for a visual PR description.
+description: Rewrite a pull request's description so anyone can understand it — short, visual (before/after table, mermaid when flow matters), simple technical English — and push it with `gh pr edit`. Run it right after any `gh pr create`, before the new PR is reported; also when the user says "update the PR", "simplify the PR description", or asks for a visual PR description.
 ---
 
 # PR Simple
@@ -32,7 +32,8 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
    gh pr edit <number> --body-file <tmpfile>
    ```
 
-5. Print the PR URL and the one-line summary you wrote. Nothing else.
+5. Report the PR URL and the one-line summary you wrote. Nothing else — when
+   another skill called you, it writes the final message.
 
 ## Description layout
 

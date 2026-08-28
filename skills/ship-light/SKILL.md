@@ -54,10 +54,13 @@ continue.
 
 ## Phase 1 — Understand and locate
 
-1. If given a ticket ID, `get_issue` plus `list_comments` — the real requirement is
-   often in a comment. Find the Linear tools with `ToolSearch("linear issue
-   comments")` if the MCP prefix differs on this machine. No ticket: work from the
-   description and say so in the PR body.
+1. If given a Linear ticket ID or URL, load and follow the `linear-context` skill,
+   then use its text handoff as the ticket source. When a pasted Linear ticket
+   contains images whose contents matter, keep the pasted text as the primary
+   source and pass only the extracted ID and image question to `linear-context`.
+   Add its image evidence to the pasted source. This preserves video transcripts
+   that Linear tools may omit. No ticket: work from the description and say so in
+   the PR body.
 2. Locate the code directly — `Grep`/`Glob` in the main thread. One `Explore`
    sub-agent only if the first two searches come up empty. No plan file, no
    scratchpad document: hold the change in the task list.
@@ -132,7 +135,9 @@ Sub-agents see a smaller tool surface than you do: a reviewer reporting that a t
    `apps/api/**`, Ory/Hydra config, or `apps/supabase/**`).
 3. Ready for review, not a draft — `check-pr.yml` skips drafts, so a draft produces
    no CI to watch.
-4. Watch CI in the background; `--watch` outlasts a foreground `Bash` call:
+4. Run the `pr-simple` skill on the new PR. It rewrites only the `## Description`
+   section; the rest of the template stays as you wrote it.
+5. Watch CI in the background; `--watch` outlasts a foreground `Bash` call:
 
    ```bash
    gh pr checks <pr> --watch --fail-fast   # Bash with run_in_background: true
