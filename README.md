@@ -6,9 +6,13 @@ They also work in Codex and OpenCode, which read the same `SKILL.md` format.
 Browse [`skills/`](skills/) to see what's here. Each skill's `SKILL.md` starts with a
 `description` line saying what it does and when to fire it, so the directory is the list.
 
-Three things you can't tell from the directory:
+Four things you can't tell from the directory:
 
 - `triage` loads `evidence`. Install them together.
+- `ponytail-review` is not mine. It's vendored verbatim from
+  [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail/blob/main/skills/ponytail-review/SKILL.md).
+  It only hunts over-engineering, so pair it with a correctness review rather than
+  using it as one.
 - `writing-for-agents` loads its own [`SKILL-MECHANICS.md`](skills/writing-for-agents/SKILL-MECHANICS.md)
   when the document being written is a skill.
 - `ship` and `ship-light` are written against my own monorepo. They name that repo's setup
