@@ -1,6 +1,6 @@
 ---
 name: pr-simple
-description: Rewrite a pull request's description so anyone can understand it — short, visual (before/after table, mermaid when flow matters), simple technical English — and push it with `gh pr edit`. Run it right after any `gh pr create`, before the new PR is reported; also when the user says "update the PR", "simplify the PR description", or asks for a visual PR description.
+description: Rewrite a pull request's description so anyone can understand it — short, visual (before/after table, mermaid when flow matters), simple technical English — upload any screenshots into it, and push it with `gh pr edit`. Run it right after any `gh pr create`, before the new PR is reported; also when the user says "update the PR", "simplify the PR description", or asks for a visual PR description.
 ---
 
 # PR Simple
@@ -25,7 +25,8 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
 
 3. Write the new body to a temp file: the template **verbatim**, with the `## Description`
    section filled using the layout below. Keep every other section and the
-   `Resolves <TICKET-ID>` line exactly as they already are in the PR body.
+   `Resolves <TICKET-ID>` line exactly as they already are in the PR body. If you were
+   given screenshots, upload them and add them as described in [Screenshots](#screenshots).
 
 4. Push it:
    ```bash
@@ -60,6 +61,27 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
 ```
 
 Drop any block that adds nothing. Two good lines beat five filler ones.
+
+## Screenshots
+
+`gh` cannot attach images, so commit each screenshot to a shared `pr-screenshots` branch
+through the API. The PR branch and the working tree stay untouched:
+
+```bash
+repo=$(gh repo view --json nameWithOwner -q .nameWithOwner)
+# once per repo: create the branch if it is missing
+gh api "repos/$repo/branches/pr-screenshots" >/dev/null 2>&1 ||
+  gh api "repos/$repo/git/refs" -f ref=refs/heads/pr-screenshots \
+    -f sha="$(gh api "repos/$repo/commits/HEAD" -q .sha)"
+# per image; piped through jq because a base64 PNG is too long for a command-line argument
+base64 < <file> | tr -d '\n' |
+  jq -Rs '{message: "screenshots for #<number>", branch: "pr-screenshots", content: .}' |
+  gh api -X PUT "repos/$repo/contents/pr-<number>/<n>-<slug>.png" --input -
+```
+
+Embed each one as `![<caption>](https://github.com/<repo>/blob/pr-screenshots/pr-<number>/<n>-<slug>.png?raw=true)`
+in the template's screenshots section, or under the Description if it has none. Number
+them in the order a user sees them and give each a one-line caption.
 
 ## Rules
 
