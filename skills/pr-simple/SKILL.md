@@ -28,7 +28,7 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
    `Resolves <TICKET-ID>` line exactly as they already are in the PR body. If you were
    given screenshots, upload them and add them as described in [Screenshots](#screenshots).
 
-4. Push it:
+4. Push it, adding one `--attach` per screenshot if you have any:
    ```bash
    gh pr edit <number> --body-file <tmpfile>
    ```
@@ -64,24 +64,23 @@ Drop any block that adds nothing. Two good lines beat five filler ones.
 
 ## Screenshots
 
-`gh` cannot attach images, so commit each screenshot to a shared `pr-screenshots` branch
-through the API. The PR branch and the working tree stay untouched:
+Upload them with `gh`'s `--attach` flag (gh 2.99 or newer). In the body, reference each
+screenshot by the same local path you pass to `--attach`; `gh` uploads the file and swaps
+the path for the uploaded URL:
 
-```bash
-repo=$(gh repo view --json nameWithOwner -q .nameWithOwner)
-# once per repo: create the branch if it is missing
-gh api "repos/$repo/branches/pr-screenshots" >/dev/null 2>&1 ||
-  gh api "repos/$repo/git/refs" -f ref=refs/heads/pr-screenshots \
-    -f sha="$(gh api "repos/$repo/commits/HEAD" -q .sha)"
-# per image; piped through jq because a base64 PNG is too long for a command-line argument
-base64 < <file> | tr -d '\n' |
-  jq -Rs '{message: "screenshots for #<number>", branch: "pr-screenshots", content: .}' |
-  gh api -X PUT "repos/$repo/contents/pr-<number>/<n>-<slug>.png" --input -
+```markdown
+1. <caption>
+![<caption>](./screenshots/1-<slug>.png)
 ```
 
-Embed each one as `![<caption>](https://github.com/<repo>/blob/pr-screenshots/pr-<number>/<n>-<slug>.png?raw=true)`
-in the template's screenshots section, or under the Description if it has none. Number
-them in the order a user sees them and give each a one-line caption.
+```bash
+gh pr edit <number> --body-file <tmpfile> \
+  --attach './screenshots/1-<slug>.png#<caption>' --attach './screenshots/2-<slug>.png#<caption>'
+```
+
+Put them in the template's screenshots section, or under the Description if it has none,
+numbered in the order a user sees them. Uploads can't be deleted, so attach only the final
+screenshots.
 
 ## Rules
 
