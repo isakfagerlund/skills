@@ -10,5 +10,5 @@ disable-model-invocation: true
 Work on the provided ticket, understand the intended outcome, and clarify any missing points that block implementation.
 Implement the feature or bug fix, then run the app using `energy setup` and `energy launch`.
 Test the affected flow in the browser, fix any issues, and take screenshots showing the flow and changes once everything looks good.
-Create the PR, then run the `pr-simple` skill with the screenshot paths so it writes the description and uploads the screenshots, wait until CI is green and the PR is ready to merge, then report back with the PR link, screenshots, and what you tested; leave merging to the user.
+Create the PR with the `make-pr` skill, passing it the screenshot paths, wait until CI is green and the PR is ready to merge, then report back with the PR link, screenshots, and what you tested; leave merging to the user.
 When reporting back, present the screenshots in the order a user sees them; if the harness can render HTML in the conversation (e.g. T3 Code's `html_render`), show them as one HTML slideshow that steps 1 → 2 → 3 with a short caption per slide, otherwise embed the images directly in that order.

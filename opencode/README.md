@@ -11,7 +11,7 @@ they do not install models, permissions, automation hooks, or spending limits.
 | [opencode-ship](opencode-ship/SKILL.md) | Authorized implementation, scoped checks, review, and PR delivery |
 
 Ship includes a light path for static edits. There is no separate ship-light skill
-and no dependency on the old `evidence`, `linear-context`, or `pr-simple` skills.
+and no dependency on the old `evidence`, `linear-context`, or `pr-simple` (now `make-pr`) skills.
 Their needed behavior lives in each skill's own references so managed imports
 remain self-contained. Ship can handle a clear request without triage; install
 both for cases needing diagnosis.

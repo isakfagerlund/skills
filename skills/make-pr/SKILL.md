@@ -1,39 +1,40 @@
 ---
-name: pr-simple
-description: Rewrite a pull request's description so anyone can understand it — short, visual (before/after table, mermaid when flow matters), simple technical English — upload any screenshots into it, and push it with `gh pr edit`. Run it right after any `gh pr create`, before the new PR is reported; also when the user says "update the PR", "simplify the PR description", or asks for a visual PR description.
+name: make-pr
+description: Create or update a pull request with a description anyone can understand — short, visual (before/after table, mermaid when flow matters), simple technical English — and any screenshots uploaded into it. Use whenever you are about to open a PR, instead of calling `gh pr create` yourself; also when the user says "update the PR", "simplify the PR description", or asks for a visual PR description.
 ---
 
-# PR Simple
+# Make PR
 
 Goal: a reviewer reads the first 5 lines and knows what changed and why.
 
 ## Steps
 
-1. Read the current PR and the diff:
+1. Read the diff, `.github/pull_request_template.md` (it changes), and the PR if one exists:
    ```bash
-   gh pr view --json number,title,body,url
    git diff main...HEAD --stat | tail -30
+   gh pr view --json number,title,body,url
    ```
-   No PR yet? Commit, push, and create it, then continue with step 2:
+
+2. Write the body to a temp file: the template **verbatim**, with `## Description` filled
+   using the layout below. For an existing PR, keep every other section and the
+   `Resolves <TICKET-ID>` line exactly as they are in its body. Save screenshots outside the
+   repo so `git add` skips them, and link each by its path,
+   `![<caption>](/tmp/pr-screenshots/1-<slug>.png)`, numbered in the order a user sees them,
+   in the template's screenshots section or under the Description if it has none.
+
+3. Commit, push, and create or update the PR with one `--attach` per screenshot. `gh`
+   (2.99 or newer) uploads each file and swaps its path in the body for the uploaded URL.
+   Uploads can't be deleted, so attach only the final screenshots.
    ```bash
    git add -A && git commit -m "<type>(<scope>): <imperative summary>"
    git push -u origin HEAD
-   gh pr create --title "<type>(<scope>): <imperative summary>" --body-file .github/pull_request_template.md --label preview:web
+   gh pr create --title "<type>(<scope>): <imperative summary>" --body-file <tmpfile> \
+     --label preview:web --attach /tmp/pr-screenshots/1-<slug>.png
+   # existing PR:
+   gh pr edit <number> --body-file <tmpfile> --attach /tmp/pr-screenshots/1-<slug>.png
    ```
 
-2. Read `.github/pull_request_template.md` from disk (it changes).
-
-3. Write the new body to a temp file: the template **verbatim**, with the `## Description`
-   section filled using the layout below. Keep every other section and the
-   `Resolves <TICKET-ID>` line exactly as they already are in the PR body. If you were
-   given screenshots, upload them and add them as described in [Screenshots](#screenshots).
-
-4. Push it, adding one `--attach` per screenshot if you have any:
-   ```bash
-   gh pr edit <number> --body-file <tmpfile>
-   ```
-
-5. Report the PR URL and the one-line summary you wrote. Nothing else — when
+4. Report the PR URL and the one-line summary you wrote. Nothing else — when
    another skill called you, it writes the final message.
 
 ## Description layout
@@ -61,26 +62,6 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
 ```
 
 Drop any block that adds nothing. Two good lines beat five filler ones.
-
-## Screenshots
-
-Upload them with `gh`'s `--attach` flag (gh 2.99 or newer). In the body, reference each
-screenshot by the same local path you pass to `--attach`; `gh` uploads the file and swaps
-the path for the uploaded URL:
-
-```markdown
-1. <caption>
-![<caption>](./screenshots/1-<slug>.png)
-```
-
-```bash
-gh pr edit <number> --body-file <tmpfile> \
-  --attach './screenshots/1-<slug>.png#<caption>' --attach './screenshots/2-<slug>.png#<caption>'
-```
-
-Put them in the template's screenshots section, or under the Description if it has none,
-numbered in the order a user sees them. Uploads can't be deleted, so attach only the final
-screenshots.
 
 ## Rules
 
