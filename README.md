@@ -3,6 +3,20 @@
 [Claude Code](https://claude.com/claude-code) skills I use, packaged as a plugin marketplace.
 They also work in Codex and OpenCode, which read the same `SKILL.md` format.
 
+## Work mode
+
+**Start with `/work-mode`.** It is the main entry point and chooses the workflow for your request:
+
+```text
+/work-mode Why do users lose their saved filters?
+/work-mode Fix the saved-filter bug.
+/work-mode Implement this ticket and merge it when verified.
+```
+
+[work-mode](skills/work-mode/SKILL.md) reads the shared engineering principles and writing rules, then routes to the relevant skills in this repo. It stays active for follow-up work in the session. Investigation remains read-only, and merging requires explicit authorization. Requests for local edits stay local.
+
+Install the full plugin, or the sibling skills referenced by `work-mode`, so its relative links resolve. You can still invoke individual workflows directly.
+
 Browse [`skills/`](skills/) to see what's here. Each skill's `SKILL.md` starts with a
 `description` line saying what it does and when to fire it, so the directory is the list.
 
@@ -30,6 +44,14 @@ ln -s ~/src/skills/skills/ship ~/.claude/skills/ship
 Symlink into a project's `.claude/skills/` instead of `~/.claude/skills/` to scope a skill to that
 repo. Codex reads `~/.codex/skills/`, OpenCode reads `~/.config/opencode/skills/`, and both follow
 symlinks, so one clone can serve all three.
+
+## Standing writing rule
+
+Work-mode loads the writing rules for its session. To require them outside work-mode too, add this instruction to your agent's personal or project instructions, such as `AGENTS.md` or `CLAUDE.md`:
+
+> Apply the `unslop` skill to all prose, including user replies. When writing skills or other agent instructions, also apply `writing-for-agents`.
+
+Install both skills to use this rule. The `unslop` description also requests automatic selection for all prose, but selection depends on the host. Installing this plugin does not install a personal or project instruction file.
 
 ## Adding a skill
 

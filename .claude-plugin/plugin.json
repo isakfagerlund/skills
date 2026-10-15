@@ -1,7 +1,7 @@
 {
   "name": "isak-skills",
   "version": "0.3.0",
-  "description": "Triage a ticket, ship it to a merge-ready PR, and write the docs your agents read.",
+  "description": "Start with work-mode to investigate, implement, verify, and follow up on PRs using shared engineering and writing rules.",
   "author": {
     "name": "Isak Fagerlund",
     "url": "https://github.com/isakfagerlund"

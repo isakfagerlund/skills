@@ -8,6 +8,8 @@ disable-model-invocation: true
 # Ship
 
 Work on the provided ticket, understand the intended outcome, and clarify any missing points that block implementation.
+Before implementing, read [engineering-principles](../engineering-principles/SKILL.md) and apply the principles relevant to the change's scope, data model, and design.
+For bug fixes, reproduce the reported behavior on the affected interface before changing code. After the fix, repeat the same flow to confirm it works. If reproduction is blocked, report what prevented it and distinguish any alternative checks from a confirmed reproduction.
 Implement the feature or bug fix, then run the app using `energy setup` and `energy launch`.
 Run the `verify` skill on the affected flow; it tests the change in the browser, fixes what it finds, and hands back the screenshot paths.
 Create the PR with the `make-pr` skill, passing it the screenshot paths, wait until CI is green and the PR is ready to merge, then report back with the PR link, screenshots, and what you tested; leave merging to the user.

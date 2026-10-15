@@ -52,14 +52,6 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
 
 <mermaid diagram — only when flow or state order is the point>
 
-**The rule in code** — only when a business rule is easier to read than to describe
-```ts
-// path/to/file.ts — <the requirement this encodes>
-<3-10 lines, copied from the diff>
-```
-
-**Files that matter**
-- `path/to/file.ts` — <what it now does>
 ```
 
 Drop any block that adds nothing. Two good lines beat five filler ones.
@@ -71,12 +63,8 @@ Drop any block that adds nothing. Two good lines beat five filler ones.
 - **Visual first.** A table or a mermaid diagram instead of a paragraph, whenever it fits.
   Mermaid renders natively on GitHub — use ```` ```mermaid ```` fences, `flowchart TD` or
   `sequenceDiagram`, max ~8 nodes, plain labels with no special characters.
-- **One snippet, at most.** Add the code block only when the change turns on a business
-  requirement — a threshold, a formula, a country-specific rule, an ordering constraint —
-  that a reviewer would otherwise have to open the diff to check. Copy it verbatim from the
-  diff (elide the middle with `// …`), keep it under 10 lines, and put the requirement in a
-  comment on the first line. Never paste plumbing, boilerplate, or a whole function.
-- **Under ~200 words** in the Description section, snippet excluded.
+- Include a file reference or short code snippet only when it makes the change easier to understand.
+- **Under ~200 words** in the Description section.
 - **No new claims.** Describe only what the diff does. No invented testing, metrics, or tickets.
 - **Do not touch** the title, labels, checklist ticks, or the Linear `Resolves` line —
   unless the user asks.
@@ -104,13 +92,4 @@ flowchart TD
   D --> C
 ```
 
-**The rule in code**
-```ts
-// useCoolingDesign.ts — one cooling design per project, so the list can settle
-if (designs.some((d) => d.projectId === projectId)) return
-await createCoolingDesign({ projectId })
-```
-
-**Files that matter**
-- `apps/web/src/features/cooling/useCoolingDesign.ts` — guards the create call
 ````

@@ -7,11 +7,11 @@ The skill-specific branch of [`writing-for-agents`](SKILL.md): what changes when
 Two choices, trading the two loads:
 
 - A **model-invoked** skill keeps a `description`, so the agent can fire it autonomously — and other skills can reach it. You can still type its name: model-invocation always _includes_ user reach; a description only ever adds agent discovery, never removes the human's. The description is the skill's top-level context pointer, forced to stay loaded at all times — permanent context load in exchange for discoverability. A model-invoked skill whose content is all reference is also one home for shared reference: another skill can invoke it, so reference needed by several skills lives in one place. Mechanics: omit `disable-model-invocation`, and write a model-facing description carrying the trigger branches (the pointer-writing rules in `SKILL.md` apply in full).
-- A **user-invoked** skill strips the description from the agent's reach: only the human typing its name can invoke it, and no other skill can. Zero context load, but it spends cognitive load — you are the index that must remember it exists. Mechanics: set `disable-model-invocation: true`; the `description` becomes human-facing — a one-line summary, trigger lists stripped.
+- A **user-invoked** skill is selected explicitly by the user rather than through automatic discovery. Set `disable-model-invocation: true` and use a short human-facing description. An explicitly invoked router can still read its `SKILL.md` by path and follow it as a workflow; the user does not need to invoke each routed skill separately.
 
-Pick model-invocation only when the agent must reach the skill on its own, or another skill must. If it only ever fires by hand, make it user-invoked and pay no context load.
+Enable model invocation when the agent should discover the skill on its own. Keep entry commands user-invoked when the user should choose that mode. Explicit file references let workflows share instructions independently of automatic discovery.
 
-Shared reference that two user-invoked skills both need can live in neither — with no descriptions, neither can fire the other. Push it to a plain file outside the skill system: external reference any skill can point at.
+Keep shared guidance in one file and link to it from each workflow that needs it. That file can be a shared skill or an ordinary reference document.
 
 ## Splitting by invocation
 
@@ -19,4 +19,4 @@ The invocation cut of splitting (the sequence cut lives in `SKILL.md`): split of
 
 ## Router skills
 
-When user-invoked skills multiply past what you can remember, that piled-up cognitive load is cured by a **router skill**: one user-invoked skill that names the others and when to reach for each, so the human has one skill to remember instead of many. It can only hint, never fire them: user-invoked skills have no description, so nothing but the human can reach them.
+A **router skill** gives the user one entry point. It identifies intent, reads the selected workflow by an explicit file path, and follows it within the user's authorized scope. Keep shared rules and routing here; keep each workflow's steps in its own file. In this repo, [work-mode](../work-mode/SKILL.md) is the main entry point. Individual workflows remain available for direct use.
