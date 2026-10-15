@@ -21,6 +21,7 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
    repo so `git add` skips them, and link each by its path,
    `![<caption>](/tmp/pr-screenshots/1-<slug>.png)`, numbered in the order a user sees them,
    in the template's screenshots section or under the Description if it has none.
+   Run the title and Description through the `unslop` skill before publishing.
 
 3. Commit, push, and create or update the PR with one `--attach` per screenshot. `gh`
    (2.99 or newer) uploads each file and swaps its path in the body for the uploaded URL.
