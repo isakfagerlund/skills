@@ -44,6 +44,7 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
 **In one line:** <what a user notices now, plain language>
 
 **The problem:** <1-2 short sentences>
+
 **The fix:** <1-2 short sentences>
 
 | Before | After |
@@ -77,6 +78,7 @@ Drop any block that adds nothing. Two good lines beat five filler ones.
 
 **The problem:** The page created a cooling design, then re-ran the same effect, which
 created another one. The list never settled, so the spinner never stopped.
+
 **The fix:** Create the design once per project and wait for the write to land before
 rendering.
 
