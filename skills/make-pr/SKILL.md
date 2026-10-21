@@ -67,6 +67,10 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
 | --- | --- |
 | <old behaviour> | <new behaviour> |
 
+**Evidence:**
+- Before: `<command>` → <failing output>
+- After: `<command>` → <passing output>
+
 <mermaid diagram — only when flow or state order is the point>
 
 <details><summary>Change outline</summary>
@@ -91,6 +95,9 @@ after `<summary>` and before `</details>`, or GitHub won't render the fences ins
   snippet only when it makes the change easier to understand.
 - **Under ~200 words** in the Description section, not counting the change outline.
 - **No new claims.** Describe only what the diff does. No invented testing, metrics, or tickets.
+- **Evidence.** Screenshots are the best proof for visual changes. For anything else, show the
+  test or command that failed before and passes after, trimmed to the lines that matter.
+  Include only output you actually ran in this session; with none, drop the block.
 - **Do not touch** the title, labels, checklist ticks, or the Linear `Resolves` line —
   unless the user asks.
 - Screenshots stay if they are already there.
