@@ -38,8 +38,21 @@ Goal: a reviewer reads the first 5 lines and knows what changed and why.
    gh pr edit <number> --body-file <tmpfile> --attach /tmp/pr-screenshots/1-<slug>.png
    ```
 
-4. Report the PR URL and the one-line summary you wrote. Nothing else — when
-   another skill called you, it writes the final message.
+4. Assess the PR with the [merge-risk](../merge-risk/SKILL.md) skill and post the result as
+   a PR comment. On reruns, edit the existing comment that starts with `**Merge risk:`
+   instead of adding another (`--edit-last` could overwrite an unrelated comment):
+   ```bash
+   id=$(gh api repos/{owner}/{repo}/issues/<number>/comments \
+     --jq '[.[] | select(.body | startswith("**Merge risk:"))] | last | .id // empty')
+   if [ -n "$id" ]; then
+     gh api -X PATCH repos/{owner}/{repo}/issues/comments/$id -F body=@<riskfile>
+   else
+     gh pr comment <number> --body-file <riskfile>
+   fi
+   ```
+
+5. Report the PR URL, the one-line summary you wrote, and the merge risk level with any ⚠️
+   categories. Nothing else — when another skill called you, it writes the final message.
 
 ## Description layout
 
